@@ -1,0 +1,13 @@
+{%extends 'base.html' %}
+
+
+{%block content%}
+
+<h3>
+    {% for liked in liked_list%}
+    
+    <li>{{liked.username}}
+    {{liked.text}}</li></h3>
+     {%endfor%}
+
+{%endblock%}
