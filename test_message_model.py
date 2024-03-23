@@ -1,6 +1,8 @@
 import os
 from unittest import TestCase
 import datetime
+from sqlalchemy import exc
+import sqlalchemy
 from models import db, User, Message, Follows
 
 # BEFORE we import our app, let's set an environmental variable
@@ -8,7 +10,7 @@ from models import db, User, Message, Follows
 # before we import our app, since that will have already
 # connected to the database
 
-os.environ['DATABASE_URL'] = "postgresql:///postgres"
+os.environ['DATABASE_URL'] = "postgresql:///warbler-new"
 
 
 # Now we can import app
@@ -22,7 +24,7 @@ from app import app
 db.create_all()
 
 
-class UserModelTestCase(TestCase):
+class MessageModelTestCase(TestCase):
     """Test views for messages."""
 
     def setUp(self):
@@ -33,13 +35,21 @@ class UserModelTestCase(TestCase):
         Follows.query.delete()
 
         self.client = app.test_client()
+    
+    def tearDown(self):
 
-    def test_user_model(self):
-   
+        db.session.rollback()
+        db.session.remove()
+
+    def test_message_model(self):
+        """ Tests the message model"""
+
+        User.signup("Comet123", "jeffrey@hotmail.com", "password", "me.png")
+        u = User.query.filter(User.username=='Comet123').first()
         m = Message(
             text ="I am Sam",
             timestamp = datetime.datetime.now(),
-            user_id = 
+            user_id = u.id
             
         )
 
@@ -47,5 +57,5 @@ class UserModelTestCase(TestCase):
         db.session.commit()
 
     
-        self.assertEqual(len(m.text), 0)
-        self.assertEqual(len(m.user_id), 0)
+        self.assertEqual(m.text, "I am Sam")
+    

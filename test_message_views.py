@@ -15,7 +15,7 @@ from models import db, connect_db, Message, User
 # before we import our app, since that will have already
 # connected to the database
 
-os.environ['DATABASE_URL'] = "postgresql:///postgres"
+os.environ['DATABASE_URL'] = "postgresql:///warbler-new"
 
 
 # Now we can import app

@@ -27,6 +27,8 @@
               <a href="/users/{{ user.id }}/followers">{{ user.followers | length }}</a>
             </h4>
           </li>
+          
+         
           <li class="stat">
             <p class="small">Likes</p>
             <h4>TBD</h4>
@@ -58,8 +60,9 @@
 <div class="row">
   <div class="col-sm-3">
     <h4 id="sidebar-username">@{{ user.username }}</h4>
-    <p>BIO HERE</p>
-    <p class="user-location"><span class="fa fa-map-marker"></span>LOCATION HERE</p>
+    <p>BIO: </p><h4>{{user.bio}}</h4>
+    <p class="user-location"><span class="fa fa-map-marker"></span>LOCATION: </p>
+    <h4>{{user.location}}</h4>
   </div>
 
   {% block user_details %}

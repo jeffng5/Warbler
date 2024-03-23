@@ -2,9 +2,11 @@
 
 
 {%block content%}
+<h4>Message added successfully</h4>
 
+<a href="/users/add_like/{{ user }}">See your messages</a>
 <h3>
-    {% for liked in liked_list%}
+    {% for liked in like%}
     
     <li>{{liked.username}}
     {{liked.text}}</li></h3>

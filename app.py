@@ -262,6 +262,21 @@ def delete_user():
 
     return redirect("/signup")
 
+@app.route('/users/add_like/<int:msg_id>', methods = ["POST"])
+def add_likes(msg_id):
+    user= g.user.id
+    msg_id= msg_id
+    db.session.add(Likes(user_id=g.user.id, message_id=msg_id))
+    db.session.commit()
+    return render_template('users/add_like.html', user=user)
+
+
+@app.route('/users/add_like/<int:user_id>', methods= ['GET'])
+def get_likes(user_id):
+    user_id = g.user.id
+    like = Likes.query.filter_by(user_id= user_id)
+    return render_template('users/add_like.html', like=like)
+
 
 ##############################################################################
 # Messages routes:

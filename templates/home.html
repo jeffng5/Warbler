@@ -33,6 +33,18 @@
                 <a href="/users/{{ g.user.id }}/followers">{{ g.user.followers | length }}</a>
               </h4>
             </li>
+            <li>
+              <p class="small">Bio:</p>
+              <h4>
+                {{ g.user.bio }}
+              </h4>
+            </li>
+            <li>
+              <p class="small">Location:</p>
+              <h4>
+                {{ g.user.location }}
+              </h4>
+            </li>
           </ul>
         </div>
       </div>

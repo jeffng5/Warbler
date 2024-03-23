@@ -7,15 +7,18 @@
 
 import os
 from unittest import TestCase
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from models import db, User, Message, Follows
+
+bcrypt = Bcrypt()
 
 # BEFORE we import our app, let's set an environmental variable
 # to use a different database for tests (we need to do this
 # before we import our app, since that will have already
 # connected to the database
 
-os.environ['DATABASE_URL'] = "postgresql:///postgres"
+os.environ['DATABASE_URL'] = "postgresql:///warbler-new"
 
 
 # Now we can import app
@@ -56,3 +59,29 @@ class UserModelTestCase(TestCase):
         # User should have no messages & no followers
         self.assertEqual(len(u.messages), 0)
         self.assertEqual(len(u.followers), 0)
+
+
+    def test_authenticate_user(self):
+        """"Does user authentication check for valid user"""
+
+        u = User.signup(
+            "testuser",
+            "test@test.com",
+            "HASHED_PASSWORD", 
+            'me.png'
+        )
+
+        self.assertEqual(User.authenticate("testuser", "HASHED_PASSWORD"), u)
+
+
+    def test_invalid_user(self):
+        """"Does user authentication check for invalid user"""
+
+        u = User.signup(
+            "testuser",
+            "test@test.com",
+            "HASHED_PASSWORD", 
+            'me.png'
+        )
+
+        self.assertFalse(User.authenticate("testuser", "nothing"), u)
